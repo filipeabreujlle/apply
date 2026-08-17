@@ -12,14 +12,26 @@ class Candidatura
     ];
 
     private string $status;
+    private DateTimeImmutable $dataCandidatura;
 
     public function __construct(
         private string $empresa,
         private string $cargo,
-        private string $dataCandidatura,
+        string $dataCandidatura,
         string $status   
     ) {
         $this->alterarStatus($status);
+
+       $data = DateTimeImmutable::createFromFormat(
+            'd/m/Y',
+            $dataCandidatura
+        );
+
+        if (!($data instanceof DateTimeImmutable)){
+            throw new InvalidArgumentException('Data inválida.');
+        }
+
+        $this->dataCandidatura = $data;
     }
 
     public function alterarStatus(string $status): void
