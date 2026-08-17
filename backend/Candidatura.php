@@ -11,6 +11,8 @@ class Candidatura
         'Reprovado'
     ];
 
+    private string $status;
+
     public function __construct(
         private string $empresa,
         private string $cargo,
@@ -23,7 +25,7 @@ class Candidatura
     public function alterarStatus(string $status): void
     {
 
-        if (!in_array($status, self::STATUS_PERMITIDOS)) {
+        if (!in_array($status, self::STATUS_PERMITIDOS, true)) {
             throw new InvalidArgumentException('Status inválido.');
         }
         $this->status = $status;
