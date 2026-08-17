@@ -3,17 +3,27 @@
 class Candidatura
 {
 
+    private const STATUS_PERMITIDOS = [
+        'Candidatura enviada',
+        'Entrevista agendada',
+        'Teste técnico',
+        'Aprovado',
+        'Reprovado'
+    ];
+
     public function __construct(
         private string $empresa,
         private string $cargo,
         private string $dataCandidatura,
-        private string $status
-    ) {}
+        string $status   
+    ) {
+        $this->alterarStatus($status);
+    }
 
     public function alterarStatus(string $status): void
     {
 
-        if ($status !== 'Aprovado' && $status !== 'Reprovado') {
+        if (!in_array($status, self::STATUS_PERMITIDOS)) {
             throw new InvalidArgumentException('Status inválido.');
         }
         $this->status = $status;
